@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+ <hibernate-configuration>
+   <session-factory>
+            <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+            <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+            <property name="hibernate.connection.username">jesux28</property>
+            <property name="hibernate.connection.password">2812ale</property>
+            <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/ORM</property>
+            <property name="hibernate.hbm2ddl.auto">update</property>
+            
+            <mapping class="Modelo.Usuario"/>
+            <mapping class="Modelo.Equipo"/>    
+            <mapping class="Modelo.MiembroKey"/>    
+            <mapping class="Modelo.MiembroDe"/>   
+            <mapping class="Modelo.Rol"/>
+            <mapping class="Modelo.RolUser"/>
+            <mapping class="Modelo.RolUserKey"/> 
+            <mapping class="Modelo.Directorio"/> 
+            <mapping class="Modelo.AuditLog"/> 
+   </session-factory>
+ </hibernate-configuration>
+
+
