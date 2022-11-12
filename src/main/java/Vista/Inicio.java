@@ -4,6 +4,7 @@ import Controladores.HibernateUtil;
 import Modelo.Sesion;
 import Modelo.Usuario;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -13,9 +14,9 @@ import org.hibernate.query.Query;
 
 public class Inicio extends javax.swing.JFrame {
 
-    SessionFactory sesionFactory = HibernateUtil.getSessionFactory();
-    Session sesion = sesionFactory.getCurrentSession();
-    
+    static SessionFactory sesionFactory = HibernateUtil.getSessionFactory();
+    static Session sesion = sesionFactory.openSession();
+    static int token;
     
     public Inicio() {
         initComponents();
@@ -187,13 +188,25 @@ public class Inicio extends javax.swing.JFrame {
 
     private void BtnConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConectarActionPerformed
         // Obtenemos los datos del Form
+        token = -1;
         String nombre = jTextField1.getText();
-        String pass = jPasswordField1.getSelectedText();
+        String pass = jPasswordField1.getText();
         //Desarrollamos una Query HQL para ver si el usuario existe
         Transaction tx = sesion.beginTransaction();
-        Query query = sesion.createQuery("from Usuario");
-        List<Usuario> user = query.list();
+        Query query = sesion.createQuery("from Usuario where nombre_Usuario= :nombre and pass= :pass");
+        query.setParameter("nombre", nombre);
+        query.setParameter("pass", pass);
+        tx.rollback();
         
+        List<Usuario> user = query.list();
+        if(!user.isEmpty()){
+            token = user.get(0).getId();
+            Menu ingreso = new Menu();
+            ingreso.setVisible(true);
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(this,"EL usuario no existe");
+        }   
         
     }//GEN-LAST:event_BtnConectarActionPerformed
 

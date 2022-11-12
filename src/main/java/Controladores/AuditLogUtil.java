@@ -15,7 +15,7 @@ public class AuditLogUtil {
         
         try{
             LocalDate hoy = LocalDate.now();      
-            AuditLog record = new AuditLog(action,entidad.getLogDetail(),new Date(hoy.getDayOfMonth(), hoy.getMonthValue(), hoy.getYear()),entidad.getId(),entidad.getClass().toString());
+            AuditLog record = new AuditLog(action,entidad.getLogDetail(),new Date(hoy.getDayOfMonth(), hoy.getMonthValue(), hoy.getYear()),entidad.getId(),entidad.getClass().toString(),0);
             sesion.save(record);
             sesion.flush();
         }catch(Exception e){

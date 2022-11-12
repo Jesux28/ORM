@@ -33,12 +33,16 @@ public class AuditLog implements Serializable {
     @Column(name = "Nombre_Tabla")
     private String NombreEntidad;
     
-    public AuditLog(String accion, String detalle, Date fechaCreada, int IdEntidad, String NombreEntidad) {
+    @Column(name = "TokenUser")
+    private int tokenUser;
+    
+    public AuditLog(String accion, String detalle, Date fechaCreada, int IdEntidad, String NombreEntidad,int tokenUser) {
         this.accion = accion;
         this.detalle = detalle;
         this.fechaCreada = fechaCreada;
         this.IdEntidad = IdEntidad;
         this.NombreEntidad = NombreEntidad;
+        this.tokenUser = tokenUser;
     }
 
     public int getLog_id() {
@@ -59,6 +63,14 @@ public class AuditLog implements Serializable {
 
     public int getIdEntidad() {
         return IdEntidad;
+    }
+
+    public int getTokenUser() {
+        return tokenUser;
+    }
+
+    public void setTokenUser(int tokenUser) {
+        this.tokenUser = tokenUser;
     }
 
     public String getNombreEntidad() {
