@@ -36,11 +36,11 @@ public class Archivo implements Serializable,IAuditLog{
     
     @ManyToOne
     @JoinColumn(name = "codD",referencedColumnName = "codDirectorio",insertable = false,updatable = false)
-    private int codDirectorio;
+    private Directorio codDirectorio;
     
     @ManyToOne
     @JoinColumn(name = " codF",referencedColumnName = "codFormato",insertable = false,updatable = false)
-    private int codFormato;
+    private Formato codFormato;
     
     @Column(name = "binario")
     private byte[] binario;
@@ -53,8 +53,8 @@ public class Archivo implements Serializable,IAuditLog{
         this.nombreArchivo = nombreArchivo;
         fechaCreacion = new Date(LocalDate.now().getDayOfMonth(),LocalDate.now().getMonthValue(),LocalDate.now().getYear());
         horaCreacion = new Time(LocalDateTime.now().getHour(),LocalDateTime.now().getMinute(),LocalDateTime.now().getSecond());    
-        this.codDirectorio = codDirectorio;
-        this.codFormato = codFormato;
+        this.codDirectorio.setCodDir(codDirectorio);
+        this.codFormato.setCodFormato(codFormato);
         this.binario = binario;
     }
 
@@ -66,13 +66,6 @@ public class Archivo implements Serializable,IAuditLog{
         this.nombreArchivo = nombreArchivo;
     }
 
-    public void setCodDirectorio(int codDirectorio) {
-        this.codDirectorio = codDirectorio;
-    }
-
-    public void setCodFormato(int codFormato) {
-        this.codFormato = codFormato;
-    }
 
     public void setBinario(byte[] binario) {
         this.binario = binario;
@@ -86,13 +79,6 @@ public class Archivo implements Serializable,IAuditLog{
         return nombreArchivo;
     }
 
-    public int getCodDirectorio() {
-        return codDirectorio;
-    }
-
-    public int getCodFormato() {
-        return codFormato;
-    }
 
     public byte[] getBinario() {
         return binario;

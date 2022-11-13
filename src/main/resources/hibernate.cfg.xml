@@ -18,6 +18,8 @@
             <mapping class="Modelo.RolUserKey"/> 
             <mapping class="Modelo.Directorio"/> 
             <mapping class="Modelo.AuditLog"/> 
+            <mapping class="Modelo.Archivo"/>
+            <mapping class="Modelo.Formato"/>
    </session-factory>
  </hibernate-configuration>
 

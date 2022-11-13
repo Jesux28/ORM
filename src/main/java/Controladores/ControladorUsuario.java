@@ -3,6 +3,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.Session;
 import Modelo.Usuario;
+import Vista.Inicio;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -10,16 +11,13 @@ import java.util.List;
 import org.hibernate.query.Query;
 
 public class ControladorUsuario{
-    InterceptorLog interceptor = new InterceptorLog();
-    //Tomamos de la configuracion, creamos una instancia de sesion
-    SessionFactory miSesion = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Usuario.class).buildSessionFactory();
     //Para abrir Sesion 
-    Session sesion = miSesion.withOptions().interceptor(interceptor).openSession();
+    Session sesion = Inicio.sesion;
+    
     
     public String createUsuario(String nombre,String pass){
         
         try{
-            interceptor.setSession(sesion);
             Usuario user = new Usuario(nombre,pass);
             //Abre el puente de transacciones entre la App Java y la BD
             sesion.beginTransaction();
@@ -27,8 +25,6 @@ public class ControladorUsuario{
             sesion.saveOrUpdate(user);
             //Tomar la transaccion hasta donde esta en ese momento y hacer un commit
             sesion.getTransaction().commit();
-            //Cerramos la conexion
-            miSesion.close();
             return "Usuario Creado";
         }catch(Exception e){ 
             e.printStackTrace();
@@ -38,7 +34,6 @@ public class ControladorUsuario{
     
     public String updateUsuario(String nombreOld,String passOld,String nombre,String pass){
         try{
-            interceptor.setSession(sesion);
             //Primero debemos obtener el usuario donde haya ese nombre y password
             //La sesion retorna una instancia de CriteriaBuilder usando el metodo getCriteriaBUilder()
             CriteriaBuilder cb= sesion.getCriteriaBuilder();
@@ -57,7 +52,6 @@ public class ControladorUsuario{
                 sesion.getTransaction().commit();
                 System.out.println("Se actualizo");
             }
-            miSesion.close();
             return "Usuario Actualizado";
         }catch(Exception e){
             System.out.println(e.toString());
@@ -67,7 +61,6 @@ public class ControladorUsuario{
 
     public String eliminarUsuario(String nombre,String pass){
         try{
-            interceptor.setSession(sesion);
             //Primero debemos obtener el usuario donde haya ese nombre y password
             //La sesion retorna una instancia de CriteriaBuilder usando el metodo getCriteriaBUilder()
             CriteriaBuilder cb= sesion.getCriteriaBuilder();
@@ -84,7 +77,6 @@ public class ControladorUsuario{
                 sesion.getTransaction().commit();
                 System.out.println("Se elimino");
             }
-            miSesion.close();
             return "Usuario Actualizado";
         }catch(Exception e){
             return "Error al Eliminar";

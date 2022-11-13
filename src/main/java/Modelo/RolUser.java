@@ -19,6 +19,15 @@ public class RolUser implements Serializable,IAuditLog{
     private RolUserKey id;
     
     //Hacemos los Joins respectivos
+    public RolUser(RolUserKey id, Date fechaDesde, Date fechaHasta, boolean activo) {
+        this.id = id;
+        this.fechaDesde = fechaDesde;
+        this.fechaHasta = fechaHasta;
+        this.activo = activo;
+    }
+
+    public RolUser() {
+    }
     
     @ManyToOne
     @JoinColumn(name = "idRol",referencedColumnName = "cod_rol",insertable = false,updatable = false)
